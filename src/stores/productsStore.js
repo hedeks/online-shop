@@ -1,17 +1,26 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
-export default productsStore = defineStore('products', {
+export const productsStore = defineStore('products', {
   state: () => ({
-    products: []
+    products: [],
+    cart: [],
   }),
 
   actions: {
     fetchProductsFromDB() {
-      fetch('https://dummyjson.com/products/1')
+      fetch('https://dummyjson.com/products')
         .then((res) => res.json())
         .then((json) => {
-          this.products = json.products
-        })
+          this.products = json.products;
+        });
+    },
+
+    addtoCart(product){
+      this.cart.push(product);
+    },
+
+    removeFromCart(id) {
+      this.cart = this.cart.filter((item) => item.id !== id)
     }
   }
 })
